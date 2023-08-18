@@ -82,7 +82,7 @@ const io = require("socket.io-client");
                 } else {
                     if (typeof process.env.ComSpec == "undefined") {
                         cmd = "bash";
-                        cmdargs = ["-i","-l"]
+                        cmdargs = ["-i"]
                     } else {
                         cmd = "cmd.exe";
                         cmdargs = []
