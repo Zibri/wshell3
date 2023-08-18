@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "node-cryptojs-aes": "^0.4.0",
+    "node-pty": "^1.0.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
+  }
+}
