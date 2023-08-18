@@ -1,4 +1,15 @@
 #!/bin/bash
+if ! command -v cloudflared &>/dev/null
+then
+    wget &>/dev/null https://github.com/cloudflare/cloudflared/releases/download/2023.7.3/cloudflared-linux-amd64.deb
+    sudo dpkg -i ./cloudflared-linux-amd64.deb
+fi
+if ! command -v cloudflared &>/dev/null
+then
+    echo Something went wrong.
+    echo Please install cloudflared.
+    exit 1
+fi
 rm -rf log
 node server 127.0.0.1:8856 &
 yarn &>/dev/null
