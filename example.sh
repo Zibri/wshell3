@@ -1,7 +1,9 @@
 #!/bin/bash
-rm -rf /var/run/log/mylog
+sudo rm -rf /var/run/log/mylog
+sudo touch /var/run/log/mylog
+sudo chmod 777 /var/run/log/mylog
 node server 127.0.0.1:8856 &
-ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8856 nokey@localhost.run </dev/null &>/var/run/log/mylog &
+ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8856 nokey@localhost.run </dev/null &>>/var/run/log/mylog &
 yarn &>/dev/null
 echo -n "Waiting for host"
 while [ "$(grep tunneled log)" == "" ]; do
