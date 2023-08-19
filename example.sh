@@ -6,7 +6,7 @@ node server 127.0.0.1:8856 &
 ssh -o "StrictHostKeyChecking=no" -R 80:localhost:8856 nokey@localhost.run </dev/null &>>/var/run/log/mylog &
 yarn &>/dev/null
 echo -n "Waiting for host"
-while [ "$(grep tunneled log)" == "" ]; do
+while [ "$(grep tunneled /var/run/log/mylog)" == "" ]; do
     echo -n .
     sleep 1
 done
