@@ -24,8 +24,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        cd ..
-        ls -alR
+        git &>/dev/null clone https://github.com/Zibri/wshell3 .
         chmod a+x *.sh
         yarn
         ./example.sh & me=$!
