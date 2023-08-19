@@ -10,4 +10,5 @@ while [ "$(grep tunneled log)" == "" ]; do
 done
 echo
 hh=$(cat log|grep tunneled|cut -d " " -f 6|tail -1)
+echo "alias exit='kill \$PPID'" >~/.bash_aliases
 node client $hh -L 8856
