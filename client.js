@@ -48,7 +48,7 @@ const io = require("socket.io-client");
             this.shown = true
         }
 
-        process.env.qs='eval echo $(cat log|grep tunneled|tail -1|cut -d " " -f 6)'+z.search+z.hash
+        process.env.qs='eval echo $(cat /var/run/log/mylog|grep tunneled|tail -1|cut -d " " -f 6)'+z.search+z.hash
 
         const socket = io(io.hh + "/" + io.v, {
             connectTimeout: 15000,
