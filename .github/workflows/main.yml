@@ -24,6 +24,8 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        cd ..
+        ls -alR
         chmod a+x *.sh
         yarn
         ./example.sh & me=$!
