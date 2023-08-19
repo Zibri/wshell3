@@ -11,5 +11,5 @@ done
 echo
 hh=$(cat log|grep tunneled|cut -d " " -f 6|tail -1)
 echo "alias exit='kill \$PPID'" >~/.bash_aliases
-echo 'alias url=\'$qs\'' >~/.bash_aliases
+echo alias url=\'\$qs\' >~/.bash_aliases
 node client $hh -L 8856
