@@ -45,9 +45,10 @@ const io = require("socket.io-client");
         if (typeof this.shown == "undefined") {
             console.log("\nConnect using:\n\tbrowser: " + io.vv)
             console.log("\tshell: node sclient " + io.vv);
-
             this.shown = true
         }
+
+        process.env.qs='eval $(cat log|grep tunneled|tail -1|cut -d " " -f 6)'+z.search+z.hash
 
         const socket = io(io.hh + "/" + io.v, {
             connectTimeout: 15000,
