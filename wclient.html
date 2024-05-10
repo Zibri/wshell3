@@ -272,13 +272,6 @@
                 var rp = (n)=>[...crypto.getRandomValues(new Uint8Array(n))].map((x,i)=>(i = x / 255 * 61 | 0,
                 String.fromCharCode(i + (i > 9 ? i > 35 ? 61 : 55 : 48)))).join``
 
-            function b64DecodeUnicode(str) {
-                // Going backwards: from bytestream, to percent-encoding, to original string.
-                return decodeURIComponent(atob(str).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
-            }
-
                 Terminal.applyAddon(fit);
                 var termOptions = {
                     fontSize: 20,
@@ -310,6 +303,13 @@
                 term.open(document.getElementById('terminal-container'));
                 window.term = term;
                 webLinks.webLinksInit(term);
+
+            function b64DecodeUnicode(str) {
+                // Going backwards: from bytestream, to percent-encoding, to original string.
+                return decodeURIComponent(atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            }
 
                 term.sh = function(txt) {
                     var ov = document.querySelector("#overlay");
