@@ -2,7 +2,6 @@ var pty = require('node-pty');
 const crypto = require('crypto');
 const CryptoJS = require('node-cryptojs-aes').CryptoJS;
 const io = require("socket.io-client");
-//const config = require("../config.js");
 
 (function() {
 
@@ -35,9 +34,7 @@ const io = require("socket.io-client");
 
     io.l = (process.argv[process.argv.length - 1] == "-l");
     io.c = (process.argv[process.argv.length - 2] == "-c") ? process.argv[process.argv.length - 1] : false;
-//    io.h = vv.substring(vv.indexOf('#') + 1);
-//    io.v = vv.substring(0, vv.indexOf('#')) || v;
-//    io.vv = vv;
+
     process.title = '[client] ' + io.v;
 
     function init() {
@@ -47,8 +44,6 @@ const io = require("socket.io-client");
             console.log("\tshell: node sclient " + io.vv);
             this.shown = true
         }
-
-        process.env.qs='eval echo $(cat /var/run/log/mylog|grep tunneled|tail -1|cut -d " " -f 6)'+z.search+z.hash
 
         const socket = io(io.hh + "/" + io.v, {
             connectTimeout: 15000,
@@ -105,8 +100,7 @@ const io = require("socket.io-client");
                 io.myREPL.on('exit', function(c) {
 
                     console.log("Shell has exited.");
-
-                    setTimeout(startREPL, 500);
+                    if(c!=0) setTimeout(startREPL, 500); else process.exit(c)
 
                 });
 
@@ -127,10 +121,11 @@ const io = require("socket.io-client");
         });
 
         socket.on("crc", (ed) => {
-         try {
+
             d = JSON.parse(CryptoJS.AES.decrypt(ed, io.h).toString(CryptoJS.enc.Utf8));
+
             io.myREPL.resize(d.cols,d.rows);
-         } catch(e) {}
+
         });
 
     }

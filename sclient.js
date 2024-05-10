@@ -1,25 +1,14 @@
 const crypto = require('crypto');
 const CryptoJS = require('node-cryptojs-aes').CryptoJS;
 const io = require("socket.io-client");
-//const config = require("../config.js");
+
+
 
 (function() {
 
     const DEBUG = process.env.debug || false;
 
     var rp = (n) => [...crypto.randomFillSync(new Uint8Array(n))].map((x, i) => (i = x / 255 * 61 | 0, String.fromCharCode(i + (i > 9 ? i > 35 ? 61 : 55 : 48)))).join ``
-
-//    vv = v = process.argv[2];
-//    if ((typeof v) == "undefined") {
-//        v = rp(16);
-//        h = rp(16);
-//        vv = v + '#' + h;
-//    }
-
-//    io.h = vv.substring(vv.indexOf('#') + 1);
-//    io.v = vv.substring(0, vv.indexOf('#')) || v;
-//    io.vv = vv;
-//    process.title = '[sclient] ' + io.v;
 
     var z=new URL(process.argv[2]);
     io.v=z.searchParams.get('v');
@@ -29,23 +18,18 @@ const io = require("socket.io-client");
     io.href=z.href;
     io.h=z.hash.substring(1);
 
-//console.log("io.h",io.h)
-//console.log("io.v",io.v)
-//console.log("io.vv",io.vv)
-//console.log("io.hh",io.hh+ "/" + io.v)
-
     function init() {
 
         if (typeof this.shown == "undefined") {
 
-            console.log("\nConnect using:\n\tbrowser: " + io.vv)
+            console.log("\nConnect using:\n\tbrowser: " + config.client.host + "/?v=" + io.vv)
             console.log("\tserve: node client " + io.vv);
             console.log("\nPress 3 times CTRL-A to exit.\n");
 
             this.shown = true
         }
 
-        const socket = io(io.hh + "/" + io.v, {
+        const socket = io(config.client.io + "/" + io.v, {
             connectTimeout: 15000,
             pingInterval: 10000,
             pingTimeout: 5000,
@@ -53,8 +37,7 @@ const io = require("socket.io-client");
         });
 
         function wsend(t,rj) {
-//console.log("sending:",t,rj);
-            var rr = CryptoJS.AES.encrypt(rj, io.h).toString()
+            var rr = CryptoJS.AES.encrypt(Buffer.from(rj), io.h).toString()
             socket.emit(t, rr);
         }
 
