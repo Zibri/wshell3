@@ -272,6 +272,13 @@
                 var rp = (n)=>[...crypto.getRandomValues(new Uint8Array(n))].map((x,i)=>(i = x / 255 * 61 | 0,
                 String.fromCharCode(i + (i > 9 ? i > 35 ? 61 : 55 : 48)))).join``
 
+            function b64DecodeUnicode(str) {
+                // Going backwards: from bytestream, to percent-encoding, to original string.
+                return decodeURIComponent(atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            }
+
                 Terminal.applyAddon(fit);
                 var termOptions = {
                     fontSize: 20,
@@ -321,11 +328,11 @@
                 }
                 );
 
-                pqs = function() {
+                pqs = functi) {
                     var str = window.location.search;
                     var objURL = {};
 
-                    str.replace(new RegExp("([^?=&]+)(=([^&]*))?","g"), function($0, $1, $2, $3) {
+                    str.replace(new RegExp("([^?=&]+)(=([^&]*))?","g"), functi$0, $1, $2, $3) {
                         objURL[$1] = $3;
                     });
                     return objURL;
@@ -351,7 +358,7 @@
                             socket.emit(t, rr);
                         }
 
-                        socket.on("disconnect", (c)=>{
+                        socket."disconnect", (c)=>{
                             console.log("disconnected", c);
                         }
                         );
@@ -386,7 +393,7 @@
 
                         socket.on("s", (ed)=>{
 
-                            d = atob(CryptoJS.AES.decrypt(ed, location.hash.substring(1)).toString(CryptoJS.enc.Utf8));
+                            d = b64DecodeUnicode(CryptoJS.AES.decrypt(ed, location.hash.substring(1)).toString(CryptoJS.enc.Utf8));
 
                             term.write(d);
 
